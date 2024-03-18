@@ -1,5 +1,28 @@
 '''
-	#to do. 
+-------------------------------------------------------------------------------
+File: plc.py
+Author: Misan
+Date: March 17, 2024
+Description:
+	 Defines a plc object and it's attributes
+ 	 PLC object is used to establish connection via UA.
+ 	 PLC object configuration is stored in <Device_Config/PLC_Config.json>
+   
+Additional notes or disclaimers can go here.
+
+Dependencies:
+  - Ping3 
+  - ConfigHandler - <ConfigHandler.py>
+  - RemoteIO - <RemoteIO.py>
+
+Usage:
+  - How to run the script or use the functions/classes in this file.
+
+History:
+  - YYYY-MM-DD: Version 1.0 - Initial release
+
+License: This code is released under the MIT License.
+-------------------------------------------------------------------------------
 '''
 import ping3
 from ConfigHandler import Config
