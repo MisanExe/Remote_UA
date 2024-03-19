@@ -1,1 +1,42 @@
-"{\"PLC_Name\": \"CODESYS\", \"IPV4_ADDRS\": \"169.254.70.100\", \"IO_config\": {\"INPUT_1\": \"Unassigned\", \"INPUT_2\": \"Unassigned\", \"OUTPUT_1\": \"Unassigned\", \"OUTPUT_2\": \"Unassigned\"}, \"port\": \"4840\", \"is_config\": true}"
+{
+    "PLC_Name": "CODESYS",
+    "IPV4_ADDRS": "169.254.70.100",
+    "IN1": [
+        0,
+        {
+            "Enable": "false"
+        },
+        {
+            "TagName": "None"
+        }
+    ],
+    "IN2": [
+        0,
+        {
+            "Enable": "false"
+        },
+        {
+            "TagName": "None"
+        }
+    ],
+    "OUT1": [
+        0,
+        {
+            "Enable": "false"
+        },
+        {
+            "TagName": "None"
+        }
+    ],
+    "OUT2": [
+        0,
+        {
+            "Enable": "false"
+        },
+        {
+            "TagName": "None"
+        }
+    ],
+    "port": "4840",
+    "is_config": true
+}

@@ -3,11 +3,13 @@
 '''
 class IO:
     def __init__ (self) :
-        self.OUT = [0,0] #inputs
-        self.IN = [0,0] #outputs
-        self.Error = " " #error string
-        self.Dignostics = " " #diagnostics string
-        self.IO_disc = None
+      self.OUT1 = [0,{"Enable":"false"},{"TagName":"None"}] #output1
+      self.OUT2 = [0,{"Enable":"false"},{"TagName":"None"}] #output2
+      self.IN1 = [0,{"Enable":"false"}, {"TagName":"None"}] #input1
+      self.IN2 = [0,{"Enable":"false"}, {"TagName":"None"}] #input2
+      self.Error = " " #error string
+      self.Dignostics = " " #diagnostics string
+      self.IO_disc = None
         #if not configured
         #default_IO_disc(self)
 

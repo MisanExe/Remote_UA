@@ -9,17 +9,17 @@ class Config :
         self.u_IO_Config = None
     
     
-    def get_data(self, config_data):
-        self.data = json.dumps(config_data, indent=None)
-        return True
+    def get_data(self, data):
+        json_string = json.dumps(data,indent=4)
+        return json_string
 
     
-    def create_conifg(self, config_data):
-        self.get_data(config_data)
+    def create_config(self, config_data):
+        json_string = self.get_data(config_data)
         #open file
         try :
             with open(self.file_path, "w") as file :
-                json.dump(self.data, file, indent=None)
+                file.write(json_string)
         except IOError:
             print("error writing to the file")
 
@@ -31,5 +31,4 @@ class Config :
     def read_config(self):
         with open(self.file_path, "r") as file:
             file_data = json.load(file)
-            file_data = json.loads(file_data)
         return file_data

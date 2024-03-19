@@ -57,12 +57,15 @@ class UA_Plc :
 			config_dict = {}
 			config_dict["PLC_Name"] = self.id
 			config_dict["IPV4_ADDRS"] = self.IPV4
-			config_dict["IO_config"] = self.IO.default_IO_disc()
+			config_dict["IN1"] = self.IO.IN1
+			config_dict["IN2"] = self.IO.IN2
+			config_dict["OUT1"] = self.IO.OUT1
+			config_dict["OUT2"] = self.IO.OUT2
 			config_dict["port"] = self.port
 			config_dict["is_config"] = self.is_config
 			print(config_dict)
 			#JSONify data 
-			self.config.create_conifg(config_dict)
+			self.config.create_config(config_dict)
 			
 
 
