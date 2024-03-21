@@ -28,7 +28,7 @@ class Config :
     def write_config(self):
         return False 
     
-    def read_config(self):
+    def read_config(self) -> dict:
         with open(self.file_path, "r") as file:
             file_data = json.load(file)
         return file_data

@@ -29,50 +29,15 @@ from ConfigHandler import Config
 from Remote_IO import IO
 
 class UA_Plc :
-	def __init__(self,id,IPV4,port,is_secure):
-		self.IPV4 = IPV4
-		self.IO = IO()
-		self.is_secure = is_secure
-		self.port = port
+	def __init__(self):
+		self.IPV4 = None
+		self.IO = IO
+		self.is_secure = False
+		self.port = " "
 		self.is_config = False
-		self.id = id
-		self.config = Config("Device_Config/PLC_Config.json")
-		self.url = "opc.tcp://"+IPV4+":"+port
-
-
-		stored_data = self.config.read_config()
-		#print(stored_data)
-		if "is_config" in stored_data:
-			value = stored_data.get("is_config")
-			if value is True:
-				self.is_config = True
-		else :
-			print("not configured")
-
-
-		#create configuration
-		if not self.is_config:
-			self.is_config = True
-			#generate data 
-			config_dict = {}
-			config_dict["PLC_Name"] = self.id
-			config_dict["IPV4_ADDRS"] = self.IPV4
-			config_dict["IN1"] = self.IO.IN1
-			config_dict["IN2"] = self.IO.IN2
-			config_dict["OUT1"] = self.IO.OUT1
-			config_dict["OUT2"] = self.IO.OUT2
-			config_dict["port"] = self.port
-			config_dict["is_config"] = self.is_config
-			print(config_dict)
-			#JSONify data 
-			self.config.create_config(config_dict)
-			
-
-
-
-
-	def is_configured(self):
-		return False
+		self.id = " "
+		self.config = None
+		self.url = ""
 	
 
 	def is_connected(self):
@@ -92,4 +57,7 @@ class UA_Plc :
 		#return true if connected
 		if(response is not None):
 			return True
+
+	def get_node(slef):
+		return ""
 			
