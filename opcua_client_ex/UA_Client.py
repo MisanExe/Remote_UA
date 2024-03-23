@@ -5,30 +5,14 @@
 import asyncio
 import logging
 import tracemalloc
-import re
 
 from asyncua import Client , Node
 from plc import UA_Plc
 from ConfigHandler import Config
+import json
+import ast
 
-async def browse_node_recursive(root, name_pattern) -> Node:
-    children = await root.get_children()
-    
-    for child in children:
-        node_display_name = await child.read_display_name()
-        match = node_display_name.Text
-        print(match)
-        
-        if match == name_pattern:
-            return child  
-        
-        if len(await child.get_children()) > 0:
-            # Recursive call to continue searching
-            found_child = await browse_node_recursive(child, name_pattern)
-            if found_child is not None:
-                return found_child  
 
-    return None
 
 
 def write_val(value, node) -> bool :
@@ -66,36 +50,79 @@ def Read_configuration(config_path) -> UA_Plc:
             config_plc.port = config_dict["port_Conf"]
             config_plc.is_config = config_dict["is_config"]
             config_plc.url = "opc.tcp://"+config_plc.IPV4+":"+config_plc.port
+            config_plc.config = config_dict
             return config_plc
     
     print("No configuration found")
     return None
 
 
+async def write_value(node, value):
+    try :
+        await node.set_value(value)
+    except Exception as e:
+        print("unable to write value : ", e)
+    finally :
+        print("exit")
+
+
+ 
+
+
 async def main():
+
+    '''
+        UA_STATE = "DEVICE_ON_NETWORK"
+        UA_STATE = "DEVICE_NOT_ON_NETWORK"
+        UA_STATE = "CONNECTED : SERVER"
+        UA_STATE = "NOT_CONNECTED : SERVER"
+    '''
+    UA_STATE = " "
 
     my_plc = Read_configuration("Device_Config/PLC_Config.json")
 
     #check if configuration complete
     if my_plc == None:
         return None
+    try :
+        if my_plc.is_connected():
+            print("plc( {}: {} ) connected \n".format(my_plc.id, my_plc.IPV4))
+            UA_STATE = "DEVICE_ON_NETWORK"
+    except Exception as e :
+        UA_STATE = "DEVICE_NOT_ON_NETWORK"
+        print("Unable to connect")
     
-    if my_plc.is_connected():
-        print("plc( {}: {} ) connected \n".format(my_plc.id, my_plc.IPV4))
+
 
     async with Client(url=my_plc.url) as client :
-        await client.connect()
-
+        try :
+            await client.connect()
+        except ConnectionRefusedError :
+            UA_STATE = "NOT_CONNECTED : SERVER"
+            print("unable to connect")
+        
         print("Connected .....getting root node\n")
-        root = client.get_root_node()
-        print("Root Node ID : ", root, "\n") 
-        nsidx = root.nodeid.NamespaceIndex
+        my_plc.root = client.get_root_node()
+        await my_plc.get_nodes()
+        my_plc.printNodes()
+   
 
-        print("Namespace index of Root Node : {}".format(nsidx))
+        '''print("Namespace index of Root Node : {}".format(nsidx))
         Start = await browse_node_recursive(client.get_root_node(), "Start")
         await Start.set_value(True)
         var = await browse_node_recursive(client.get_root_node(), "NAME")
-        print(await var.read_value())
+        print(await var.read_value())'''
+ 
+      
+        #var = str(await browse_node_recursive(client.get_root_node(), "NAME"))
+        #print(type(var))
+
+        #await my_plc.Node_OUT1.set_value(True)
+        await write_value(my_plc.Node_Diagnostics, "Hello from adele")
+        await write_value(my_plc.Node_Connected, True)
+
+        
+
 
 		
 

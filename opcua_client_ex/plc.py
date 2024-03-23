@@ -27,6 +27,28 @@ License: This code is released under the MIT License.
 import ping3
 from ConfigHandler import Config
 from Remote_IO import IO
+from asyncua import Client , Node
+
+
+async def browse_node_recursive(root, name_pattern) -> Node:
+    children = await root.get_children()
+    
+    for child in children:
+        node_display_name = await child.read_display_name()
+        match = node_display_name.Text
+        print(match)
+        
+        if match == name_pattern:
+            return child  
+        
+        if len(await child.get_children()) > 0:
+            # Recursive call to continue searching
+            found_child = await browse_node_recursive(child, name_pattern)
+            if found_child is not None:
+                return found_child  
+
+    return None
+
 
 class UA_Plc :
 	def __init__(self):
@@ -38,7 +60,17 @@ class UA_Plc :
 		self.id = " "
 		self.config = None
 		self.url = ""
-	
+		self.root = None
+
+		self.Node_OUT1 = None
+		self.Node_OUT2 = None
+		self.Node_IN1 = None
+		self.Node_IN2 = None
+
+		#system defined
+		self.Node_Diagnostics = None
+		self.Node_Connected = None
+		self.Node_Fault = None
 
 	def is_connected(self):
 		timeout = 0.1
@@ -60,4 +92,40 @@ class UA_Plc :
 
 	def get_node(slef):
 		return ""
+	
+	async def get_nodes(self):
+		OUT1 = self.config["OUT1_Conf"]
+		OUT2 = self.config["OUT1_Conf"]
+		IN1 = self.config["IN1_Conf"]
+		IN2 = self.config["IN2_Conf"]
+		#write code to handle none in Tag Name
+		
+
+		#print(type(OUT1[1]["TagName"]), OUT1[1]["TagName"])
+
+		#user defined
+		self.Node_OUT1 = await browse_node_recursive(self.root, OUT1[1]["TagName"])
+		self.Node_OUT2 = await browse_node_recursive(self.root, OUT2[1]["TagName"])
+		self.Node_IN1 =  await browse_node_recursive(self.root, IN1[1]["TagName"])
+		self.Node_IN2 = await browse_node_recursive(self.root, IN2[1]["TagName"])
+
+		#system defined
+		self.Node_Diagnostics = await browse_node_recursive(self.root, "UA_Diagnostics")
+		self.Node_Connected =  await browse_node_recursive(self.root, "UA_Connected")
+		self.Node_Fault = await browse_node_recursive(self.root, "UA_FAULT")
+
+		
+
+	
+	
+	def printNodes(self):
+		print("OUT1 : ",self.Node_OUT1, "\n")
+		print("OUT2 : ",self.Node_OUT2, "\n")
+		print("IN1 : ",self.Node_IN1, "\n")
+		print("IN2 : ",self.Node_IN1, "\n")
+
+		print("Diagnostics : ",self.Node_Diagnostics, "\n")
+		print("Fault : ",self.Node_Fault, "\n")
+		print("Connected : ",self.Node_Connected, "\n")
+		
 			

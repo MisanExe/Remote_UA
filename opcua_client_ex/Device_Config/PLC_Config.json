@@ -6,7 +6,7 @@
             "Enable": "false"
         },
         {
-            "TagName": "None"
+            "TagName": "UA_IN1"
         }
     ],
     "IN2_Conf": [
@@ -14,7 +14,7 @@
             "Enable": "false"
         },
         {
-            "TagName": "None"
+            "TagName": "UA_IN2"
         }
     ],
     "OUT1_Conf": [
@@ -22,7 +22,7 @@
             "Enable": "false"
         },
         {
-            "TagName": "None"
+            "TagName": "UA_OUT1"
         }
     ],
     "OUT2_Conf": [
@@ -30,7 +30,7 @@
             "Enable": "false"
         },
         {
-            "TagName": "None"
+            "TagName": "UA_OUT2"
         }
     ],
     "port_Conf": "4840",
