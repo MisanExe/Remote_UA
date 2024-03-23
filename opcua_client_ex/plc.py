@@ -28,6 +28,8 @@ import ping3
 from ConfigHandler import Config
 from Remote_IO import IO
 from asyncua import Client , Node
+import asyncio
+
 
 
 async def browse_node_recursive(root, name_pattern) -> Node:
@@ -36,7 +38,7 @@ async def browse_node_recursive(root, name_pattern) -> Node:
     for child in children:
         node_display_name = await child.read_display_name()
         match = node_display_name.Text
-        print(match)
+        #print(match)
         
         if match == name_pattern:
             return child  
@@ -103,17 +105,30 @@ class UA_Plc :
 
 		#print(type(OUT1[1]["TagName"]), OUT1[1]["TagName"])
 
+		
+
 		#user defined
-		self.Node_OUT1 = await browse_node_recursive(self.root, OUT1[1]["TagName"])
-		self.Node_OUT2 = await browse_node_recursive(self.root, OUT2[1]["TagName"])
-		self.Node_IN1 =  await browse_node_recursive(self.root, IN1[1]["TagName"])
-		self.Node_IN2 = await browse_node_recursive(self.root, IN2[1]["TagName"])
+		#self.Node_OUT1 = await browse_node_recursive(self.root, OUT1[1]["TagName"])
+		task1 = asyncio.create_task(browse_node_recursive(self.root, OUT2[1]["TagName"]))
+		task2 = asyncio.create_task(browse_node_recursive(self.root, OUT2[1]["TagName"]))
+		task3 = asyncio.create_task(browse_node_recursive(self.root, IN1[1]["TagName"]))
+		task4 = asyncio.create_task(browse_node_recursive(self.root, IN2[1]["TagName"]))
+		task5 = asyncio.create_task(browse_node_recursive(self.root, "UA_Diagnostics"))
+		task6 = asyncio.create_task(browse_node_recursive(self.root, "UA_Connected"))
+		task7 = asyncio.create_task(browse_node_recursive(self.root, "UA_FAULT"))
+
+		#user defined
+		self.Node_OUT1 = await task1
+		self.Node_OUT2 = await task2
+		self.Node_IN1 =  await task3
+		self.Node_IN2 = await task4
+		
 
 		#system defined
-		self.Node_Diagnostics = await browse_node_recursive(self.root, "UA_Diagnostics")
-		self.Node_Connected =  await browse_node_recursive(self.root, "UA_Connected")
-		self.Node_Fault = await browse_node_recursive(self.root, "UA_FAULT")
-
+		self.Node_Diagnostics = await task5
+		self.Node_Connected =  await task6
+		self.Node_Fault = await task7
+		
 		
 
 	
