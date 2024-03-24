@@ -66,7 +66,13 @@ async def write_value(node, value):
         print("exit")
 
 
- 
+async def read_value(node) -> bool:
+    try :
+        return await node.read_value()
+    except Exception as e:
+        print("Error reading Value : ", e)
+    return 0
+
 
 
 async def main():
@@ -84,6 +90,8 @@ async def main():
     #check if configuration complete
     if my_plc == None:
         return None
+    
+
     try :
         if my_plc.is_connected():
             print("plc( {}: {} ) connected \n".format(my_plc.id, my_plc.IPV4))
@@ -100,11 +108,14 @@ async def main():
         except ConnectionRefusedError :
             UA_STATE = "NOT_CONNECTED : SERVER"
             print("unable to connect")
+            return None
         
+
         print("Connected .....getting root node\n")
         my_plc.root = client.get_root_node()
         await my_plc.get_nodes()
         my_plc.printNodes()
+
    
 
         '''print("Namespace index of Root Node : {}".format(nsidx))
@@ -120,6 +131,10 @@ async def main():
         #await my_plc.Node_OUT1.set_value(True)
         await write_value(my_plc.Node_Diagnostics, "Hello from adele")
         await write_value(my_plc.Node_Connected, True)
+        val2 = await read_value(my_plc.Node_Fault)
+        val3 = await my_plc.Node_IN2.read_value()
+        print(val2)
+        print(val3)
 
         
 

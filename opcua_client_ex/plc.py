@@ -109,7 +109,7 @@ class UA_Plc :
 
 		#user defined
 		#self.Node_OUT1 = await browse_node_recursive(self.root, OUT1[1]["TagName"])
-		task1 = asyncio.create_task(browse_node_recursive(self.root, OUT2[1]["TagName"]))
+		task1 = asyncio.create_task(browse_node_recursive(self.root, OUT1[1]["TagName"]))
 		task2 = asyncio.create_task(browse_node_recursive(self.root, OUT2[1]["TagName"]))
 		task3 = asyncio.create_task(browse_node_recursive(self.root, IN1[1]["TagName"]))
 		task4 = asyncio.create_task(browse_node_recursive(self.root, IN2[1]["TagName"]))
