@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Remote OPCUA Manager</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Remote OPCUA IO</h1>
+        <nav class="topnav">
+            <a class="active" href="#home">Home</a>
+            <a href="#profile"><span class="material-symbols-outlined">account_circle</span> Profile</a>
+        </nav>
+    </header>
+
+    <div class="flexgrid">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <h2>Device</h2>
+                    <p>Remote OPCUA IO
+                      
+                    </p>
+                </li>
+
+                <li>DUmm1</li>
+                <li>Dummy</li>
+                <li><button class="writeButton" onclick="saveConfig()">Push</button></li>
+            </ul>
+        </div>
+    <form id="configform">
+        <div class="configsection">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Port</th>
+                        <th>Enable</th>
+                        <th>Tagname</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>IN1</td>
+                        <td>
+                            <label class="switch">
+                                <input id="IN1" name="in_value_1" type="checkbox" onclick="myFunction()">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <!-- Tagname input field -->
+                            <input type="text" id="IN1_tag" name="tag_1">
+                        </td>
+                    </tr>
+                    <!-- Additional rows with input fields -->
+                    <tr>
+                        <td>IN2</td>
+                        <td>
+                            <label class="switch">
+                                <input id="IN2" name="in_value_2" type="checkbox" onclick="myFunction()">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <!-- Tagname input field -->
+                            <input type="text" id="IN2_tag" name="tag_2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>OUT1</td>
+                        <td>
+                            <label class="switch">
+                                <input id="OUT1" name="out_value_1" type="checkbox" onclick="myFunction()">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <!-- Tagname input field -->
+                            <input type="text" id="OUT1_tag" name="tag_3">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>OUT2</td>
+                        <td>
+                            <label class="switch">
+                                <input id="OUT2" name="out_value_2" type="checkbox" onclick="myFunction()">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <!-- Tagname input field -->
+                            <input type="text" id="OUT2_tag" name="tag_4">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+       
+        </div>
+
+        ...
+        <!-- Small table for IP Address and Port input fields -->
+    <div class="NetworkInfo">
+        <table>
+            <tr>
+                <td><label>IP Address:</label></td>
+                <td><input type="text" id="IPV4" name="smallIp" placeholder="Enter IP Address"></td>
+            </tr>
+            <tr>
+                <td><label>Port:</label></td>
+                <td><input type="text" id="Port" name="smallPort" placeholder="Enter Port Number"></td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <script src="main.js" async defer></script>
+   </form>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+{
+  "PLC_Name": "CODESYS",
+  "IPV4_ADDRS": "169.254.70.102",
+  "IN1_Conf": [
+    {
+      "Enable": "False"
+    },
+    {
+      "TagName": "UA_IN1"
+    }
+  ],
+  "IN2_Conf": [
+    {
+      "Enable": "False"
+    },
+    {
+      "TagName": "UA_IN2"
+    }
+  ],
+  "OUT1_Conf": [
+    {
+      "Enable": "False"
+    },
+    {
+      "TagName": "UA_OUT1"
+    }
+  ],
+  "OUT2_Conf": [
+    {
+      "Enable": "False"
+    },
+    {
+      "TagName": "UA_OUT2"
+    }
+  ],
+  "port_Conf": "4840",
+  "is_config": true
+}
